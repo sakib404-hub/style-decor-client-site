@@ -4,6 +4,7 @@ import SocialLogin from '../SocialLogin/SocialLogin';
 import { Link } from 'react-router';
 import { IoMdEyeOff } from 'react-icons/io';
 import { FaEye } from 'react-icons/fa';
+import axios from 'axios';
 
 const Register = () => {
     const [showPass, setShowPass] = useState(false);
@@ -13,8 +14,20 @@ const Register = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
+        const profile = {};
+        try {
+            const profileImage = data.photo[0];
+            const formData = new FormData();
+            formData.append('image', profileImage);
+            const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
+            const res = await axios.post(url, formData);
+            profile.photoURL = res.data.data.url;
+            console.log(profile.photoURL);
+        } catch (error) {
+            console.log(error.message)
+        }
     };
     return (
         <div className="lg:min-h-screen flex items-center justify-center px-4">
@@ -71,16 +84,16 @@ const Register = () => {
                 <div className='form-control'>
                     <label
                         className='label'
-                        htmlFor="image">
+                        htmlFor="photo">
                         <span>Image</span>
                     </label>
                     <input
                         type="file"
                         className="file-input file-input-neutral"
-                        {...register('image', { required: 'Image is required!' })} />
+                        {...register('photo', { required: 'Image is required!' })} />
                     {
-                        errors.image && <p className="text-red-500 text-sm mt-1">
-                            {errors.image.message}
+                        errors.photo && <p className="text-red-500 text-sm mt-1">
+                            {errors.photo.message}
                         </p>
                     }
                 </div>
