@@ -33,7 +33,7 @@ const Register = () => {
         <div className="lg:min-h-screen flex items-center justify-center px-4">
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-full max-w-sm p-8 rounded-2xl shadow-xl space-y-1"
+                className="w-full max-w-sm p-8 rounded-2xl shadow-2xl space-y-1"
             >
                 <h2 className="text-2xl font-bold text-center">Register</h2>
                 {/* Name field  */}
@@ -89,7 +89,7 @@ const Register = () => {
                     </label>
                     <input
                         type="file"
-                        className="file-input file-input-neutral"
+                        className="file-input file-input-neutral bg-purple-100"
                         {...register('photo', { required: 'Image is required!' })} />
                     {
                         errors.photo && <p className="text-red-500 text-sm mt-1">
