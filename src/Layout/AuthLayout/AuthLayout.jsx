@@ -4,7 +4,7 @@ import authImg from "../../assets/authImg.png";
 
 const AuthLayout = () => {
     return (
-        <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-3">
+        <div className="min-h-screen max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-3">
             <div className="order-2 lg:order-1 col-span-1 lg:col-span-2 flex items-center justify-center bg-white">
                 <img
                     src={authImg}
