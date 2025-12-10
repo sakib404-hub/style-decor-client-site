@@ -2,10 +2,11 @@ import React from 'react';
 import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router';
 import useAuth from '../../Hooks/useAuth/useAuth';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const { user } = useAuth();
+    const { user, logOut } = useAuth();
     const links = (
         <>
             <li><a href="#">Submenu 1</a></li>
@@ -15,6 +16,30 @@ const Navbar = () => {
 
     const handleLoginClick = () => {
         navigate('/login');
+    }
+
+    const handleLogOut = () => {
+        console.log('button is clicked!');
+        logOut()
+            .then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Logged out!',
+                    text: 'You have successfully logged out.',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    position: 'center',
+                });
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Logout Failed',
+                    text: error.message,
+                    confirmButtonColor: '#d33',
+                    position: 'center',
+                });
+            })
     }
 
     return (
@@ -39,12 +64,32 @@ const Navbar = () => {
             </div>
             <div className="navbar-end md:p-2">
                 {user ? (
-                    <img
-                        src={user.photoURL || "/defaultUser.png"}
-                        alt={user.displayName || "User"}
-                        className="w-10 h-10 md:h-15 md:w-15 rounded-full object-cover border-2 border-indigo-500"
-                        title={user.displayName || "User"}
-                    />
+                    <div className="dropdown dropdown-left cursor-pointer">
+                        <div tabIndex={0} role="button" className=" m-1">
+                            <img
+                                src={user.photoURL || "/defaultUser.png"}
+                                alt={user.displayName || "User"}
+                                className="w-10 h-10 md:h-15 md:w-15 rounded-full object-cover border-2 border-indigo-500"
+                                title={user.displayName || "User"}
+                            />
+                        </div>
+                        <ul
+                            tabIndex="-1"
+                            className="dropdown-content menu rounded-box z-10 p-2 min-w-40 shadow-lg bg-white border border-gray-200"
+                        >
+                            <li
+                                className="px-4 py-2 rounded-lg hover:bg-indigo-500 hover:text-white transition-all duration-300 cursor-pointer"
+                            >
+                                Profile
+                            </li>
+                            <li
+                                className="px-4 py-2 rounded-lg hover:bg-indigo-500 hover:text-white transition-all duration-300 cursor-pointer"
+                                onClick={handleLogOut}
+                            >
+                                LogOut
+                            </li>
+                        </ul>
+                    </div>
                 ) : (
                     <button
                         onClick={handleLoginClick}
