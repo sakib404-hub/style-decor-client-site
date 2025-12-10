@@ -1,9 +1,41 @@
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import useAuth from '../../../Hooks/useAuth/useAuth';
+import Swal from 'sweetalert2';
 
 const SocialLogin = () => {
+    const { handleGoogleSignIn } = useAuth();
     const handleSocialOnClick = () => {
-        console.log('Button is Clicked!');
+        handleGoogleSignIn()
+            .then((res) => {
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "success",
+                    title: `Welcome, ${res.user.displayName || "User"}!`,
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    background: "#f0f9ff",
+                    color: "#0f172a",
+                    iconColor: "#22c55e",
+                });
+            })
+            .catch((error) => {
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "Login failed",
+                    text: error.message,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    background: "#fef2f2",
+                    color: "#991b1b",
+                    iconColor: "#dc2626",
+                });
+            })
     }
     return (
         <div>
