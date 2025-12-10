@@ -6,8 +6,8 @@ import { auth } from '../../Firebase/firebase.config';
 const provider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
-    const { user, setUser } = useState(null);
-    const { loading, setLoading } = useState(true);
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
     //handling google sign-In
     const handleGoogleSignIn = () => {
         setLoading(true);

@@ -1,9 +1,11 @@
 import React from 'react';
 import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router';
+import useAuth from '../../Hooks/useAuth/useAuth';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const links = (
         <>
             <li><a href="#">Submenu 1</a></li>
@@ -36,10 +38,23 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end md:p-2">
-                <button
-                    onClick={handleLoginClick}
-                    className="btn btn-neutral">Login</button>
+                {user ? (
+                    <img
+                        src={user.photoURL || "/defaultUser.png"}
+                        alt={user.displayName || "User"}
+                        className="w-10 h-10 md:h-15 md:w-15 rounded-full object-cover border-2 border-indigo-500"
+                        title={user.displayName || "User"}
+                    />
+                ) : (
+                    <button
+                        onClick={handleLoginClick}
+                        className="btn btn-neutral"
+                    >
+                        Login
+                    </button>
+                )}
             </div>
+
         </div>
     );
 };
