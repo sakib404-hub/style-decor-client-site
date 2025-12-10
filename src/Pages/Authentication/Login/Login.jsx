@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import { Link } from "react-router";
@@ -7,8 +7,6 @@ import { IoMdEyeOff } from "react-icons/io";
 import { AuthContext } from "../../../Context/AuthContext/AuthContext";
 
 const Login = () => {
-    const { name, age } = useContext(AuthContext);
-    console.log(name, age);
     const [showPass, setShowPass] = useState(false);
     const {
         register,
