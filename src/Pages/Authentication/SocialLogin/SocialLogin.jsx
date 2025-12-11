@@ -2,9 +2,11 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../../Hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 const SocialLogin = () => {
     const { handleGoogleSignIn } = useAuth();
+    const navigate = useNavigate();
     const handleSocialOnClick = () => {
         handleGoogleSignIn()
             .then((res) => {
@@ -20,6 +22,7 @@ const SocialLogin = () => {
                     color: "#0f172a",
                     iconColor: "#22c55e",
                 });
+                navigate('/');
             })
             .catch((error) => {
                 Swal.fire({

@@ -93,10 +93,11 @@ const Navbar = () => {
                 ) : (
                     <button
                         onClick={handleLoginClick}
-                        className="btn btn-neutral"
+                        className="btn btn-neutral px-6 py-2 rounded-lg text-white hover:bg-gray-700 transition-colors duration-300"
                     >
                         Login
                     </button>
+
                 )}
             </div>
 

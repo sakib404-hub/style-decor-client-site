@@ -5,8 +5,10 @@ import { Link } from 'react-router';
 import { IoMdEyeOff } from 'react-icons/io';
 import { FaEye } from 'react-icons/fa';
 import axios from 'axios';
+import useAuth from '../../../Hooks/useAuth/useAuth';
 
 const Register = () => {
+    const { createUser } = useAuth();
     const [showPass, setShowPass] = useState(false);
     const {
         register,
@@ -28,6 +30,26 @@ const Register = () => {
         } catch (error) {
             console.log(error.message)
         }
+
+        const newUser = {
+            displayName: data.name,
+            email: data.email,
+            photoURL: profile.photoURL,
+        }
+        const email = data.email;
+        const password = data.password;
+        console.log(email, password)
+        console.log(newUser);
+
+        //here creating the user
+        createUser(email, password)
+            .then((res) => {
+                console.log(res.user);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            })
+
     };
     return (
         <div className="lg:min-h-screen flex items-center justify-center px-4">
