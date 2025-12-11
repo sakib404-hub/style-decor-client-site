@@ -6,9 +6,12 @@ import { IoMdEyeOff } from 'react-icons/io';
 import { FaEye } from 'react-icons/fa';
 import axios from 'axios';
 import useAuth from '../../../Hooks/useAuth/useAuth';
+import { updateProfile } from 'firebase/auth';
+import { auth } from '../../../Firebase/firebase.config';
+import Swal from 'sweetalert2';
 
 const Register = () => {
-    const { createUser } = useAuth();
+    const { createUser, setLoading } = useAuth();
     const [showPass, setShowPass] = useState(false);
     const {
         register,
@@ -45,9 +48,48 @@ const Register = () => {
         createUser(email, password)
             .then((res) => {
                 console.log(res.user);
+                updateProfile(auth.currentUser, { displayName: newUser.displayName, photoURL: newUser.photoURL })
+                    .then(() => {
+                        Swal.fire({
+                            title: "Account Created!",
+                            text: `Welcome, ${newUser.displayName}!`,
+                            icon: "success",
+                            background: "#f0f5ff",
+                            color: "#2b2d42",
+                            confirmButtonText: "Continue",
+                            confirmButtonColor: "#6366F1",
+                            showClass: {
+                                popup: "animate__animated animate__fadeInDown"
+                            },
+                            hideClass: {
+                                popup: "animate__animated animate__fadeOutUp"
+                            }
+                        });
+                    })
+                    .catch((error) => {
+                        Swal.fire({
+                            title: "Profile Update Failed",
+                            text: error.message,
+                            icon: "error",
+                            background: "#ffecec",
+                            color: "#b91c1c",
+                            confirmButtonColor: "#ef4444",
+                        });
+                    })
             })
             .catch((error) => {
-                console.log(error.message);
+                Swal.fire({
+                    title: "Registration Failed",
+                    text: error.message,
+                    icon: "error",
+                    background: "#ffecec",
+                    color: "#7f1d1d",
+                    confirmButtonColor: "#dc2626",
+                });
+            })
+            .finally(() => {
+
+                setLoading(false);
             })
 
     };
