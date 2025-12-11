@@ -11,11 +11,11 @@ const AuthLayout = () => {
     const { loading } = useAuth();
     return (
         <div className="max-w-[1440px] mx-auto">
+            <div className="bg-linear-to-br from-indigo-200 to-purple-200">
+                <Logo></Logo>
+            </div>
             {
                 loading ? <Spinner></Spinner> : <>
-                    <div className="bg-linear-to-br from-indigo-200 to-purple-200">
-                        <Logo></Logo>
-                    </div>
                     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-3">
                         <div className="order-2 lg:order-1 col-span-1 lg:col-span-2 flex items-center justify-center bg-white">
                             <img
@@ -30,9 +30,9 @@ const AuthLayout = () => {
                             </div>
                         </div>
                     </div>
-                    <Footer></Footer>
                 </>
             }
+            <Footer></Footer>
         </div>
     );
 };

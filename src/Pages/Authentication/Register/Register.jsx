@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import SocialLogin from '../SocialLogin/SocialLogin';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { IoMdEyeOff } from 'react-icons/io';
 import { FaEye } from 'react-icons/fa';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import { auth } from '../../../Firebase/firebase.config';
 import Swal from 'sweetalert2';
 
 const Register = () => {
+    const navigate = useNavigate();
     const { createUser, setLoading } = useAuth();
     const [showPass, setShowPass] = useState(false);
     const {
@@ -47,12 +48,12 @@ const Register = () => {
         //here creating the user
         createUser(email, password)
             .then((res) => {
-                console.log(res.user);
+                navigate('/');
                 updateProfile(auth.currentUser, { displayName: newUser.displayName, photoURL: newUser.photoURL })
                     .then(() => {
                         Swal.fire({
                             title: "Account Created!",
-                            text: `Welcome, ${newUser.displayName}!`,
+                            text: `Welcome, ${res.user.displayName}!`,
                             icon: "success",
                             background: "#f0f5ff",
                             color: "#2b2d42",
@@ -88,7 +89,6 @@ const Register = () => {
                 });
             })
             .finally(() => {
-
                 setLoading(false);
             })
 

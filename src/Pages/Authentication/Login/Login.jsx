@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import SocialLogin from "../SocialLogin/SocialLogin";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaEye } from "react-icons/fa";
 import { IoMdEyeOff } from "react-icons/io";
 import { AuthContext } from "../../../Context/AuthContext/AuthContext";
+import useAuth from "../../../Hooks/useAuth/useAuth";
+import Swal from "sweetalert2";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const { logInUser } = useAuth();
     const [showPass, setShowPass] = useState(false);
     const {
         register,
@@ -15,7 +19,47 @@ const Login = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        const email = data.email;
+        const password = data.password;
+        logInUser(email, password)
+            .then((res) => {
+                Swal.fire({
+                    title: "Login Successful!",
+                    text: `Welcome back, ${res.user.displayName || "User"} 👋`,
+                    icon: "success",
+                    background: "white",
+                    color: "#4f46e5",
+                    confirmButtonText: "Continue",
+                    confirmButtonColor: "#6366f1",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showClass: {
+                        popup: "animate__animated animate__fadeInDown"
+                    },
+                    hideClass: {
+                        popup: "animate__animated animate__fadeOutUp"
+                    }
+                });
+                navigate('/');
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: "Login Failed",
+                    text: error.message || "Something went wrong. Please try again.",
+                    icon: "error",
+                    background: "white",
+                    color: "#dc2626",
+                    confirmButtonText: "Try Again",
+                    confirmButtonColor: "#ef4444",
+                    showClass: {
+                        popup: "animate__animated animate__shakeX"
+                    },
+                    hideClass: {
+                        popup: "animate__animated animate__fadeOut"
+                    }
+                });
+            })
+
     };
 
     return (
