@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from '../Logo/Logo';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import useAuth from '../../Hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 
@@ -64,32 +64,51 @@ const Navbar = () => {
             </div>
             <div className="navbar-end md:p-2">
                 {user ? (
-                    <div className="dropdown dropdown-left cursor-pointer">
-                        <div tabIndex={0} role="button" className=" m-1">
+                    <div className="dropdown dropdown-left dropdown-hover cursor-pointer">
+                        {/* Avatar */}
+                        <div tabIndex={0} role="button" className="m-1">
                             <img
                                 src={user.photoURL || "/defaultUser.png"}
                                 alt={user.displayName || "User"}
-                                className="w-10 h-10 md:h-15 md:w-15 rounded-full object-cover border-2 border-indigo-500"
                                 title={user.displayName || "User"}
+                                className="w-15 h-15 rounded-full object-cover border-2 border-slate-300 hover:border-indigo-500 transition"
                             />
                         </div>
+
+                        {/* Dropdown Menu */}
                         <ul
-                            tabIndex="-1"
-                            className="dropdown-content menu rounded-box z-10 p-2 min-w-40 shadow-lg bg-white border border-gray-200"
+                            tabIndex={-1}
+                            className="dropdown-content menu rounded-lg z-20 p-2 w-48 bg-white border border-slate-200 shadow-lg"
                         >
-                            <li
-                                className="px-4 py-2 rounded-lg hover:bg-indigo-500 hover:text-white transition-all duration-300 cursor-pointer"
-                            >
-                                Profile
+                            <li>
+                                <Link
+                                    to="/dashboard"
+                                    className="rounded-md px-4 py-2 hover:bg-slate-700 hover:text-white"
+                                >
+                                    Dashboard
+                                </Link>
                             </li>
-                            <li
-                                className="px-4 py-2 rounded-lg hover:bg-indigo-500 hover:text-white transition-all duration-300 cursor-pointer"
-                                onClick={handleLogOut}
-                            >
-                                LogOut
+
+                            <li>
+                                <Link
+                                    to="/profile"
+                                    className="rounded-md px-4 py-2 hover:bg-slate-700 hover:text-white"
+                                >
+                                    Profile
+                                </Link>
+                            </li>
+
+                            <li>
+                                <button
+                                    onClick={handleLogOut}
+                                    className="text-left w-full rounded-md px-4 py-2 hover:bg-red-500 hover:text-white"
+                                >
+                                    Log out
+                                </button>
                             </li>
                         </ul>
                     </div>
+
                 ) : (
                     <button
                         onClick={handleLoginClick}
