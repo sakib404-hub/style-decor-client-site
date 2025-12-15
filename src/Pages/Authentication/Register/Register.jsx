@@ -23,7 +23,6 @@ const Register = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data);
         const profile = {};
         try {
             const profileImage = data.photo[0];
@@ -32,7 +31,6 @@ const Register = () => {
             const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
             const res = await axios.post(url, formData);
             profile.photoURL = res.data.data.url;
-            console.log(profile.photoURL);
         } catch (error) {
             console.log(error.message)
         }
@@ -50,7 +48,7 @@ const Register = () => {
         createUser(email, password)
             .then((res) => {
                 navigate('/');
-                updateProfile(auth.currentUser, { displayName: newUser.displayName, photoURL: newUser.photoURL })
+                updateProfile(auth.currentUser, { displayName: newUser.userName, photoURL: newUser.userImage })
                     .then(() => {
                         axiosInstance.post('/users', newUser)
                             .then((res) => {

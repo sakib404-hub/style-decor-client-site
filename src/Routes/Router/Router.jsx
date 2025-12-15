@@ -9,6 +9,7 @@ import Profile from "../../Pages/Home/Profile/Profile";
 import DashBoard from "../../Pages/DashBoard/DashBoard/DashBoard";
 import PrivateRoute from '../PrivateRoute/PrivateRoute'
 
+
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -21,7 +22,9 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'profile',
-                Component: Profile
+                element: <PrivateRoute>
+                    <Profile></Profile>
+                </PrivateRoute>
             }
         ]
     },
