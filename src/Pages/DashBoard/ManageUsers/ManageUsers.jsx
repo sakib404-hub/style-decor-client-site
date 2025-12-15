@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
 import Swal from 'sweetalert2';
 
 const ManageUsers = () => {
     const axiosInstance = useAxios();
+    const [selectedUser, setSelectedUser] = useState(null);
+    const modalRef = useRef(null);
 
     // loading the user informations  
     const { data: users = [], isLoading, refetch } = useQuery({
@@ -122,6 +124,12 @@ const ManageUsers = () => {
             }
         });
     };
+
+    const handleView = (user) => {
+        setSelectedUser(user);
+        modalRef.current.showModal();
+    }
+
     return (
         <div>
             <div>
@@ -201,7 +209,7 @@ const ManageUsers = () => {
                                         <td>
                                             <div className="flex gap-2 justify-center min-w-[220px]">
                                                 <button
-                                                    onClick={() => console.log(user.userRole)}
+                                                    onClick={() => handleView(user)}
                                                     className="btn btn-xs md:btn-sm btn-outline btn-info"
                                                 >
                                                     View
@@ -241,6 +249,38 @@ const ManageUsers = () => {
                         </table>
                     </div>
                 </div>
+
+                {/* /Modal For displaying user information   */}
+                <dialog id="user_modal" className="modal" ref={modalRef}>
+                    <div className="modal-box max-w-md">
+                        {selectedUser ? (
+                            <div className="flex flex-col items-center text-center gap-4">
+                                <div className="avatar">
+                                    <div className="w-24 h-24 rounded-full ring ring-indigo-300 overflow-hidden">
+                                        <img
+                                            src={selectedUser.userImage || "/defaultUser.png"}
+                                            alt={selectedUser.userName}
+                                        />
+                                    </div>
+                                </div>
+
+                                <h3 className="font-bold text-xl">{selectedUser.userName}</h3>
+
+                                <p><strong>Email:</strong> {selectedUser.userEmail}</p>
+                                <p><strong>Role:</strong> {selectedUser.userRole}</p>
+                                <p><strong>Joined:</strong> {new Date(selectedUser.createdAt).toLocaleDateString()}</p>
+
+                                <div className="modal-action">
+                                    <form method="dialog">
+                                        <button className="btn">Close</button>
+                                    </form>
+                                </div>
+                            </div>
+                        ) : (
+                            <p>Loading...</p>
+                        )}
+                    </div>
+                </dialog>
 
             </div>
         </div>
