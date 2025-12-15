@@ -4,12 +4,12 @@ import SocialLogin from "../SocialLogin/SocialLogin";
 import { Link, useNavigate } from "react-router";
 import { FaEye } from "react-icons/fa";
 import { IoMdEyeOff } from "react-icons/io";
-import { AuthContext } from "../../../Context/AuthContext/AuthContext";
 import useAuth from "../../../Hooks/useAuth/useAuth";
 import Swal from "sweetalert2";
 
 const Login = () => {
     const navigate = useNavigate();
+    console.log(location);
     const { logInUser } = useAuth();
     const [showPass, setShowPass] = useState(false);
     const {

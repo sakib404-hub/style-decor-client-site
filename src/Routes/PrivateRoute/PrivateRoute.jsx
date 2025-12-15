@@ -1,12 +1,13 @@
 import React, { Children } from 'react';
 import useAuth from '../../Hooks/useAuth/useAuth';
-import { Navigate, useLocation } from 'react-router';
+import { Navigate } from 'react-router';
 import Spinner from '../../Components/Spinner/Spinner'
 
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
-    const location = useLocation();
+    // const location = useLocation();
+    // console.log(location.state);
 
     //checking if we got the loading state true if yes then returning a spinner
     if (loading) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from '../Logo/Logo';
-import { Link, useNavigate } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import useAuth from '../../Hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 
@@ -9,8 +9,7 @@ const Navbar = () => {
     const { user, logOut } = useAuth();
     const links = (
         <>
-            <li><a href="#">Submenu 1</a></li>
-            <li><a href="#">Submenu 2</a></li>
+            <NavLink to='/dashboard'>DashBoard</NavLink>
         </>
     );
 
