@@ -18,7 +18,6 @@ const Navbar = () => {
     }
 
     const handleLogOut = () => {
-        console.log('button is clicked!');
         logOut()
             .then(() => {
                 Swal.fire({

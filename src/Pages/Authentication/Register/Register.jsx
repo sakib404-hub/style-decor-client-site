@@ -9,11 +9,13 @@ import useAuth from '../../../Hooks/useAuth/useAuth';
 import { updateProfile } from 'firebase/auth';
 import { auth } from '../../../Firebase/firebase.config';
 import Swal from 'sweetalert2';
+import useAxios from '../../../Hooks/useAxios/useAxios';
 
 const Register = () => {
     const navigate = useNavigate();
     const { createUser, setLoading } = useAuth();
     const [showPass, setShowPass] = useState(false);
+    const axiosInstance = useAxios();
     const {
         register,
         handleSubmit,
@@ -36,14 +38,13 @@ const Register = () => {
         }
 
         const newUser = {
-            displayName: data.name,
-            email: data.email,
-            photoURL: profile.photoURL,
+            userName: data.name,
+            userEmail: data.email,
+            userImage: profile.photoURL,
+            userRole: 'user'
         }
         const email = data.email;
         const password = data.password;
-        console.log(email, password)
-        console.log(newUser);
 
         //here creating the user
         createUser(email, password)
@@ -51,6 +52,16 @@ const Register = () => {
                 navigate('/');
                 updateProfile(auth.currentUser, { displayName: newUser.displayName, photoURL: newUser.photoURL })
                     .then(() => {
+                        axiosInstance.post('/users', newUser)
+                            .then((res) => {
+                                console.log('User saved successfully:', res.data);
+                            })
+                            .catch((error) => {
+                                console.error(
+                                    'Failed to save user:',
+                                    error.response?.data || error.message
+                                );
+                            })
                         Swal.fire({
                             title: "Account Created!",
                             text: `Welcome, ${res.user.displayName}!`,
