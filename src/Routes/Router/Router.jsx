@@ -8,6 +8,7 @@ import Home from "../../Pages/Home/Home/Home";
 import Profile from "../../Pages/Home/Profile/Profile";
 import DashBoard from "../../Pages/DashBoard/DashBoard/DashBoard";
 import PrivateRoute from '../PrivateRoute/PrivateRoute'
+import ManageUsers from "../../Pages/DashBoard/ManageUsers/ManageUsers";
 
 
 export const router = createBrowserRouter([
@@ -49,6 +50,12 @@ export const router = createBrowserRouter([
         element: <PrivateRoute>
             <DashBoard></DashBoard>
         </PrivateRoute>,
-        errorElement: <ErrorPage></ErrorPage>
+        errorElement: <ErrorPage></ErrorPage>,
+        children: [
+            {
+                path: 'manageUsers',
+                Component: ManageUsers
+            }
+        ]
     }
 ])

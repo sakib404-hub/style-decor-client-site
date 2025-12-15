@@ -4,8 +4,10 @@ import { RiArchiveDrawerFill } from 'react-icons/ri';
 import { FaHome } from 'react-icons/fa';
 import { PiUserSwitchFill } from 'react-icons/pi';
 import Footer from '../../../Components/Footer/Footer';
+import { Outlet, useNavigate } from 'react-router';
 
 const DashBoard = () => {
+    const navigate = useNavigate();
     return (
         <div className="max-w-[1440px] mx-auto bg-slate-100">
             <div className="drawer lg:drawer-open">
@@ -29,7 +31,8 @@ const DashBoard = () => {
                         </div>
                     </nav>
                     <div className="p-6 text-slate-700">
-                        Page Content
+                        <Outlet>
+                        </Outlet>
                     </div>
                 </div>
 
@@ -56,6 +59,7 @@ const DashBoard = () => {
                                 <button
                                     className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
                                     data-tip="Manage Users"
+                                    onClick={() => { navigate('/dashboard/manageUsers') }}
                                 >
                                     <PiUserSwitchFill className="size-6" />
                                     <span className="is-drawer-close:hidden">Manage Users</span>

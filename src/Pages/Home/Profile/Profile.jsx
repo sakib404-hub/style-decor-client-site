@@ -10,7 +10,7 @@ const Profile = () => {
     const axiosInstance = useAxios();
 
     const { data: dbUser = [], isLoading } = useQuery({
-        queryKey: ["user", user?.email],
+        queryKey: ["user", user?.email, user?.role],
         enabled: !!user?.email,
         queryFn: async () => {
             const res = await axiosInstance.get(`/myUserInfo?email=${user.email}`);
