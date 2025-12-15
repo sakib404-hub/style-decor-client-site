@@ -3,17 +3,19 @@ import React, { useRef, useState } from 'react';
 import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
 import Swal from 'sweetalert2';
+import { FaRegUser } from 'react-icons/fa';
 
 const ManageUsers = () => {
     const axiosInstance = useAxios();
     const [selectedUser, setSelectedUser] = useState(null);
     const modalRef = useRef(null);
+    const [searchText, setSearchText] = useState('');
 
     // loading the user informations  
     const { data: users = [], isLoading, refetch } = useQuery({
-        queryKey: ['/users', 'allUsers'],
+        queryKey: ['/users', 'allUsers', searchText],
         queryFn: async () => {
-            const res = await axiosInstance.get('/users');
+            const res = await axiosInstance.get(`/users?searchText=${searchText}`);
             return res.data;
         }
     })
@@ -132,11 +134,25 @@ const ManageUsers = () => {
 
     return (
         <div>
-            <div>
-                {
-                    isLoading && <Spinner></Spinner>
-                }
+            <div className="flex items-center justify-center">
+                <div className="rounded-xl my-10 p-4 shadow-md">
+                    <div className="flex items-center space-x-2">
+                        <label className="flex items-center bg-white border border-gray-300 rounded-2xl px-3 py-2 focus-within:ring-2 focus-within:ring-indigo-400">
+                            <FaRegUser className="text-gray-400 mr-2" />
+                            <input
+                                type="email"
+                                placeholder="Search User"
+                                className="outline-none md:w-64"
+                                onChange={(event) => setSearchText(event.target.value)}
+                            />
+                        </label>
+                        <button className="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl px-6 py-2 shadow-md transition-all duration-200">
+                            Search
+                        </button>
+                    </div>
+                </div>
             </div>
+
             <div>
                 <div className="bg-white rounded-2xl shadow-lg">
                     <div className="overflow-x-auto">
@@ -248,6 +264,11 @@ const ManageUsers = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div>
+                    {
+                        isLoading && <Spinner></Spinner>
+                    }
                 </div>
 
                 {/* /Modal For displaying user information   */}
