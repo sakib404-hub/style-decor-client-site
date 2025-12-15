@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 const Login = () => {
     const navigate = useNavigate();
-    console.log(location);
+    // console.log(location);
     const { logInUser } = useAuth();
     const [showPass, setShowPass] = useState(false);
     const {

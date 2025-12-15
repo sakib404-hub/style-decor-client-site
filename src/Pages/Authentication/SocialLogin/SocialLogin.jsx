@@ -3,13 +3,31 @@ import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../../Hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
+import useAxios from '../../../Hooks/useAxios/useAxios';
 
 const SocialLogin = () => {
     const { handleGoogleSignIn } = useAuth();
+    const axiosInstance = useAxios();
     const navigate = useNavigate();
     const handleSocialOnClick = () => {
         handleGoogleSignIn()
             .then((res) => {
+                const newUser = {
+                    userName: res.user.displayName,
+                    userEmail: res.user.email,
+                    userImage: res.user.photoURL,
+                    userRole: 'user'
+                }
+                axiosInstance.post('/users', newUser)
+                    .then((res) => {
+                        console.log('User saved successfully:', res.data);
+                    })
+                    .catch((error) => {
+                        console.error(
+                            'Failed to save user:',
+                            error.response?.data || error.message
+                        );
+                    })
                 Swal.fire({
                     toast: true,
                     position: "top-end",
