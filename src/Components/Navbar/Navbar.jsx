@@ -10,12 +10,15 @@ const Navbar = () => {
     const links = (
         <div
             className='flex gap-6 text-base font-semibold'>
-            <NavLink 
-            to='/dashboard'
-            className={'nav-link'}>DashBoard</NavLink>
-            <NavLink 
-            to='/services'
-            className={'nav-link'}>Our Services</NavLink>
+            <NavLink
+                to='/'
+                className={'nav-link'}>Home</NavLink>
+            <NavLink
+                to='/services'
+                className={'nav-link'}>Our Services</NavLink>
+            <NavLink
+                to='/dashboard'
+                className={'nav-link'}>DashBoard</NavLink>
         </div>
     );
 
