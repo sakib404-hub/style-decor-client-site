@@ -3,6 +3,7 @@ import Slider from '../Slider/Slider';
 import LatestServices from '../LatestServices/LatestServices';
 import AreaOfCoverage from '../AreaOfCoverage/AreaOfCoverage';
 import { useLoaderData } from 'react-router';
+import Cta from './../Cta/Cta'
 
 const Home = () => {
     const locations = useLoaderData();
@@ -17,6 +18,9 @@ const Home = () => {
             <section>
                 <AreaOfCoverage locations={locations
                 }></AreaOfCoverage>
+            </section>
+            <section>
+                <Cta></Cta>
             </section>
         </div>
     );

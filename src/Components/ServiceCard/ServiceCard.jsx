@@ -1,9 +1,11 @@
 import React from "react";
 import { FaStar, FaClock, FaCheckCircle } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import { motion } from "framer-motion";
 
 const ServiceCard = ({ service }) => {
     const navigate = useNavigate();
+
     const {
         packageName,
         shortDescription,
@@ -17,18 +19,28 @@ const ServiceCard = ({ service }) => {
         isPopular,
         isActive,
     } = service;
+
     const handleViewButtonClick = (id) => {
         navigate(`/serviceDetails/${id}`);
-    }
+    };
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            whileHover={{ y: -6 }}
+            className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
+        >
             {/* Image */}
             <div className="relative">
-                <img
+                <motion.img
                     src={images}
                     alt={packageName}
                     className="w-full h-48 object-cover"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.4 }}
                 />
 
                 {isPopular && (
@@ -46,7 +58,6 @@ const ServiceCard = ({ service }) => {
 
             {/* Content */}
             <div className="p-5 space-y-3">
-                {/* Title */}
                 <h3 className="text-lg font-semibold text-slate-800">
                     {packageName}
                 </h3>
@@ -105,14 +116,17 @@ const ServiceCard = ({ service }) => {
                         )}
                     </div>
 
-                    <button
-                        onClick={() => { handleViewButtonClick(service._id) }}
-                        className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-xl text-sm transition">
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleViewButtonClick(service._id)}
+                        className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-xl text-sm transition"
+                    >
                         View Details
-                    </button>
+                    </motion.button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
