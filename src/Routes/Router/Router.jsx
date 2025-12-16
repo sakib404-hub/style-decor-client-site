@@ -13,6 +13,7 @@ import Services from "../../Pages/Services/Services";
 import ServiceDetails from "../../Components/ServiceDetails/ServiceDetails";
 import AboutUs from "../../Pages/AboutUs/AboutUs";
 import ContactUs from "../../Pages/ContactUs/ContactUs";
+import Spinner from "../../Components/Spinner/Spinner";
 
 
 export const router = createBrowserRouter([
@@ -23,7 +24,9 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                Component: Home
+                Component: Home,
+                loader: () => fetch('/locations.json'),
+                hydrateFallbackElement: <Spinner />
             },
             {
                 path: 'profile',
@@ -74,7 +77,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'manageUsers',
-                Component: ManageUsers
+                Component: ManageUsers,
             }
         ]
     }
