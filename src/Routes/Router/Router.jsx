@@ -11,6 +11,7 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute'
 import ManageUsers from "../../Pages/DashBoard/ManageUsers/ManageUsers";
 import Services from "../../Pages/Services/Services";
 import ServiceDetails from "../../Components/ServiceDetails/ServiceDetails";
+import AboutUs from "../../Pages/AboutUs/AboutUs";
 
 
 export const router = createBrowserRouter([
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
             {
                 path: 'serviceDetails/:id',
                 Component: ServiceDetails
+            },
+            {
+                path: 'aboutUs',
+                Component: AboutUs
             }
         ]
     },
