@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../../../Components/Logo/Logo';
 import { RiArchiveDrawerFill } from 'react-icons/ri';
-import { FaHome } from 'react-icons/fa';
+import { FaClipboardList, FaHome } from 'react-icons/fa';
 import { PiUserSwitchFill } from 'react-icons/pi';
 import Footer from '../../../Components/Footer/Footer';
 import { Outlet, useNavigate } from 'react-router';
@@ -51,6 +51,16 @@ const DashBoard = () => {
                                 >
                                     <FaHome className="size-6" />
                                     <span className="is-drawer-close:hidden">Home Page</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
+                                    data-tip="My Bookings"
+                                    onClick={() => navigate('/dashboard/myBookings')}
+                                >
+                                    <FaClipboardList className="size-6" />
+                                    <span className="is-drawer-close:hidden">My Bookings</span>
                                 </button>
                             </li>
 

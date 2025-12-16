@@ -272,10 +272,12 @@ const ServiceDetails = () => {
                                 {/* Submit Button */}
                                 <button
                                     type="submit"
-                                    className="btn btn-primary w-full mt-2"
+                                    disabled={!user}
+                                    className={`bg-primary text-white px-6 py-3 rounded-xl transition font-semibold w-full lg:w-auto
+                                            ${!user ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#ff5656e8]'}`}
                                     onClick={() => modalRef.current.close()}
                                 >
-                                    Book Now
+                                    {user ? 'Book Now' : 'Login to Book'}
                                 </button>
                             </form>
                         </div>

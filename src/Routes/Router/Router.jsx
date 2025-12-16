@@ -14,6 +14,7 @@ import ServiceDetails from "../../Components/ServiceDetails/ServiceDetails";
 import AboutUs from "../../Pages/AboutUs/AboutUs";
 import ContactUs from "../../Pages/ContactUs/ContactUs";
 import Spinner from "../../Components/Spinner/Spinner";
+import MyBookings from "../../Pages/DashBoard/MyBookings/MyBookings";
 
 
 export const router = createBrowserRouter([
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
             {
                 path: 'manageUsers',
                 Component: ManageUsers,
+            },
+            {
+                path: 'myBookings',
+                Component: MyBookings
             }
         ]
     }
