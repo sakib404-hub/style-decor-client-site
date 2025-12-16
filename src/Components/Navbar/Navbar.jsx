@@ -9,7 +9,7 @@ const Navbar = () => {
     const { user, logOut } = useAuth();
     const links = (
         <div
-            className='flex gap-6 text-base font-semibold'>
+            className='flex flex-col md:flex-row bg-linear-to-r from-indigo-500 to-purple-500 md:bg-none gap-6 text-base font-semibold rounded-xl p-2'>
             <NavLink
                 to='/'
                 className={'nav-link'}>Home</NavLink>

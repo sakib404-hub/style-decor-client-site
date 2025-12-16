@@ -15,6 +15,8 @@ import AboutUs from "../../Pages/AboutUs/AboutUs";
 import ContactUs from "../../Pages/ContactUs/ContactUs";
 import Spinner from "../../Components/Spinner/Spinner";
 import MyBookings from "../../Pages/DashBoard/MyBookings/MyBookings";
+import PaymentsSuccess from "../../Pages/DashBoard/Payments/PaymentsSuccess/PaymentsSuccess";
+import PaymentCancel from "../../Pages/DashBoard/Payments/PaymentCancel/PaymentCancel";
 
 
 export const router = createBrowserRouter([
@@ -83,6 +85,14 @@ export const router = createBrowserRouter([
             {
                 path: 'myBookings',
                 Component: MyBookings
+            },
+            {
+                path: 'payment-success',
+                Component: PaymentsSuccess
+            },
+            {
+                path: 'payment-cancel',
+                Component: PaymentCancel
             }
         ]
     }

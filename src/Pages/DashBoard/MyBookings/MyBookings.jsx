@@ -23,8 +23,30 @@ const MyBookings = () => {
     });
 
     //handling the payment
-    const handlePayment = (booking) => {
-        console.log(booking);
+    const handlePayment = async (booking) => {
+        console.log('Button is clicked');
+        const paymentInfo = {
+            serviceId: booking.serviceId,
+            serviceName: booking.serviceName,
+            cost: booking.price,
+            customerEmail: booking.customerEmail
+        }
+
+        // axiosInstance.post('/create-checkout-session', paymentInfo)
+        //     .then((res)=>{
+        //         console.log(res);
+        //     })
+        //     .catch((error)=>{
+        //         console.log(error);
+        //     })
+
+        try {
+            const res = await axiosInstance.post('/create-checkout-session', paymentInfo)
+            console.log(res.data)
+            window.location.assign(res.data.url);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
