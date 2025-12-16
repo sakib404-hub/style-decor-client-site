@@ -12,6 +12,7 @@ import ManageUsers from "../../Pages/DashBoard/ManageUsers/ManageUsers";
 import Services from "../../Pages/Services/Services";
 import ServiceDetails from "../../Components/ServiceDetails/ServiceDetails";
 import AboutUs from "../../Pages/AboutUs/AboutUs";
+import ContactUs from "../../Pages/ContactUs/ContactUs";
 
 
 export const router = createBrowserRouter([
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
             {
                 path: 'aboutUs',
                 Component: AboutUs
+            },
+            {
+                path: 'contactUs',
+                Component: ContactUs
             }
         ]
     },
