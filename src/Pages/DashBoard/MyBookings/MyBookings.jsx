@@ -29,7 +29,8 @@ const MyBookings = () => {
             serviceId: booking.serviceId,
             serviceName: booking.serviceName,
             cost: booking.price,
-            customerEmail: booking.customerEmail
+            customerEmail: booking.customerEmail,
+            serviceImg: booking.serviceImg
         }
 
         // axiosInstance.post('/create-checkout-session', paymentInfo)
