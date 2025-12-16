@@ -16,3 +16,23 @@
   --color-error: oklch(65% 0.3 30);
   --color-error-content: oklch(98% 0.01 30);
 }
+
+.nav-link {
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: #374151; 
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.nav-link:hover {
+  background-color: #f3f4f6; 
+  color: #111827;
+}
+
+.nav-link.active {
+  background-color: rgba(137, 51, 199, 0.664); 
+  color: white;
+  font-weight: 600;
+}
+
+

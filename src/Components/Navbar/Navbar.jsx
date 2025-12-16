@@ -8,9 +8,15 @@ const Navbar = () => {
     const navigate = useNavigate();
     const { user, logOut } = useAuth();
     const links = (
-        <>
-            <NavLink to='/dashboard'>DashBoard</NavLink>
-        </>
+        <div
+            className='flex gap-6 text-base font-semibold'>
+            <NavLink 
+            to='/dashboard'
+            className={'nav-link'}>DashBoard</NavLink>
+            <NavLink 
+            to='/services'
+            className={'nav-link'}>Our Services</NavLink>
+        </div>
     );
 
     const handleLoginClick = () => {
