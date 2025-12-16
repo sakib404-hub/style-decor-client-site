@@ -10,6 +10,7 @@ import DashBoard from "../../Pages/DashBoard/DashBoard/DashBoard";
 import PrivateRoute from '../PrivateRoute/PrivateRoute'
 import ManageUsers from "../../Pages/DashBoard/ManageUsers/ManageUsers";
 import Services from "../../Pages/Services/Services";
+import ServiceDetails from "../../Components/ServiceDetails/ServiceDetails";
 
 
 export const router = createBrowserRouter([
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
             {
                 path: 'services',
                 Component: Services
+            },
+            {
+                path: 'serviceDetails/:id',
+                Component: ServiceDetails
             }
         ]
     },

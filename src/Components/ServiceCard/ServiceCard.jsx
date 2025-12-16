@@ -1,7 +1,9 @@
 import React from "react";
 import { FaStar, FaClock, FaCheckCircle } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 const ServiceCard = ({ service }) => {
+    const navigate = useNavigate();
     const {
         packageName,
         shortDescription,
@@ -15,6 +17,9 @@ const ServiceCard = ({ service }) => {
         isPopular,
         isActive,
     } = service;
+    const handleViewButtonClick = (id) => {
+        navigate(`/serviceDetails/${id}`);
+    }
 
     return (
         <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
@@ -100,7 +105,9 @@ const ServiceCard = ({ service }) => {
                         )}
                     </div>
 
-                    <button className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-xl text-sm transition">
+                    <button
+                        onClick={() => { handleViewButtonClick(service._id) }}
+                        className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-xl text-sm transition">
                         View Details
                     </button>
                 </div>
