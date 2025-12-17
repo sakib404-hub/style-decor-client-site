@@ -4,10 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 const MyBookings = () => {
     const { user } = useAuth();
     const axiosInstance = useAxios();
+    const navigate = useNavigate();
 
     // loading bookings 
     const { data: myBookings = {}, isLoading, refetch } = useQuery({
@@ -115,7 +117,7 @@ const MyBookings = () => {
                                 <th>SL No</th>
                                 <th>Service</th>
                                 <th>Customer</th>
-                                <th>Event Type</th>
+                                <th>Service Status</th>
                                 <th>Service Date</th>
                                 <th>Price</th>
                                 <th>Payment Status</th>
@@ -159,7 +161,7 @@ const MyBookings = () => {
                                         </div>
                                     </td>
 
-                                    <td>{booking.eventType}</td>
+                                    <td>{booking.serviceStatus}</td>
                                     <td>{new Date(booking.serviceDate).toLocaleDateString()}</td>
                                     <td>৳ {booking.price}</td>
 
@@ -176,11 +178,11 @@ const MyBookings = () => {
                                     {/* Action */}
                                     <td>
                                         {booking.paymentStatus.toLowerCase() === 'paid' ? (
-                                            <button className="btn btn-sm btn-success cursor-not-allowed text-white">
+                                            <button className="btn btn-sm btn-success text-white">
                                                 Track Your Service
                                             </button>
                                         ) : (
-                                            <div className='space-x-2'>
+                                            <div className='space-x-2 flex'>
                                                 <button
                                                     className="btn btn-sm btn-secondary"
                                                     onClick={() => handlePayment(booking)}
@@ -200,8 +202,19 @@ const MyBookings = () => {
                             ))}
                         </tbody>
                     </table>
-                </div>) : <div>
-                    <p>You don't Have Booking Yet!</p>
+                </div>) : <div className="flex flex-col items-center justify-center py-20 rounded-2xl bg-gray-50">
+                    <h3 className="text-2xl font-semibold text-gray-700">
+                        No Bookings Yet
+                    </h3>
+                    <p className="text-gray-500 mt-2 text-center max-w-md p-2">
+                        You haven’t made any bookings yet. Once you book a service,
+                        your booking details will appear here.
+                    </p>
+                    <button
+                        onClick={() => navigate('/services')}
+                        className="mt-6 btn btn-primary rounded-full px-6">
+                        Explore Services
+                    </button>
                 </div>
             }
 

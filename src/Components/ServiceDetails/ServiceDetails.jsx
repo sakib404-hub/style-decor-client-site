@@ -74,7 +74,8 @@ const ServiceDetails = () => {
                     serviceDate: data.bookingDate,
                     serviceLocation: data.location,
                     paymentStatus: 'Unpaid',
-                    price: service.discountPrice
+                    price: service.discountPrice,
+                    serviceStatus: 'Pending Payment'
                 }
                 axiosInstance.post('/bookings', newBooking)
                     .then((res) => {

@@ -5,9 +5,12 @@ import { FaClipboardList, FaHome } from 'react-icons/fa';
 import { PiUserSwitchFill } from 'react-icons/pi';
 import Footer from '../../../Components/Footer/Footer';
 import { Outlet, useNavigate } from 'react-router';
+import useRole from '../../../Hooks/useRole/useRole';
+import { MdPayments } from "react-icons/md";
 
 const DashBoard = () => {
     const navigate = useNavigate();
+    const { role } = useRole();
     return (
         <div className="max-w-[1440px] mx-auto bg-slate-100">
             <div className="drawer lg:drawer-open">
@@ -63,18 +66,30 @@ const DashBoard = () => {
                                     <span className="is-drawer-close:hidden">My Bookings</span>
                                 </button>
                             </li>
-
-                            {/* Manage Users */}
                             <li>
                                 <button
                                     className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
-                                    data-tip="Manage Users"
-                                    onClick={() => { navigate('/dashboard/manageUsers') }}
+                                    data-tip="Payment History"
+                                    onClick={() => navigate('/dashboard/paymentHistory')}
                                 >
-                                    <PiUserSwitchFill className="size-6" />
-                                    <span className="is-drawer-close:hidden">Manage Users</span>
+                                    <MdPayments className="size-6" />
+                                    <span className="is-drawer-close:hidden">Payment History</span>
                                 </button>
                             </li>
+
+                            {/* Manage Users */}
+                            {
+                                role === 'admin' && <li>
+                                    <button
+                                        className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
+                                        data-tip="Manage Users"
+                                        onClick={() => { navigate('/dashboard/manageUsers') }}
+                                    >
+                                        <PiUserSwitchFill className="size-6" />
+                                        <span className="is-drawer-close:hidden">Manage Users</span>
+                                    </button>
+                                </li>
+                            }
 
                         </ul>
                     </div>
