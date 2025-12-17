@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
 
 const AssignDecorator = () => {
     const axiosInstance = useAxios();
+    const status = 'available';
+    const [selectedbooking, setSelectedBooking] = useState(null);
+    const modalRef = useRef();
     const { data: bookings = {}, isLoading } = useQuery({
         queryKey: ['Bookings', 'paid'],
         queryFn: async () => {
@@ -17,11 +20,28 @@ const AssignDecorator = () => {
             }
         }
     })
+    const { data: decorators = {} } = useQuery({
+        queryKey: ['decorators', 'available'],
+        queryFn: async () => {
+            try {
+                const res = await axiosInstance.get(`/users/${status}/decorator`)
+                return res.data;
+            } catch (error) {
+                console.log(error);
+                return {};
+            }
+        }
+    })
+
 
 
     //handling the assignment of Decorators
-    const handleAssignDecorator = (bookings) => {
-        console.log(bookings)
+    const handleFindDecorator = (booking) => {
+        setSelectedBooking(booking);
+        modalRef.current.showModal();
+    }
+    const handleAssignDecorator = (decorator) => {
+        console.log(decorator);
     }
     if (isLoading) {
         return <Spinner></Spinner>
@@ -115,7 +135,7 @@ const AssignDecorator = () => {
                                 <td>
                                     <button
                                         className="btn btn-sm btn-primary"
-                                        onClick={() => handleAssignDecorator(booking)}
+                                        onClick={() => handleFindDecorator(booking)}
                                     >
                                         Find Decorators
                                     </button>
@@ -126,6 +146,60 @@ const AssignDecorator = () => {
 
                 </table>
             </div>
+            <dialog id="my_modal_2" className="modal" ref={modalRef}>
+                <div className="modal-box">
+                    <h2 className="text-xl font-bold mb-4">Available Decorators</h2>
+                    {decorators.length === 0 ? (
+                        <p>No decorators available</p>
+                    ) : (
+                        decorators.map((decorator) => (
+                            <div
+                                key={decorator._id}
+                                className="flex items-center justify-between p-3 mb-3 rounded-lg shadow-sm"
+                            >
+                                {/* User Info */}
+                                <div className="flex items-center gap-3">
+                                    <img
+                                        src={decorator.userImage}
+                                        alt={decorator.userName}
+                                        className="w-12 h-12 rounded-full object-cover"
+                                    />
+                                    <div>
+                                        <p className="font-semibold">{decorator.userName}</p>
+                                        <p className="text-sm text-gray-500">{decorator.userEmail}</p>
+                                        <p className="text-sm">
+                                            Status:{" "}
+                                            <span
+                                                className={
+                                                    decorator.status === "available"
+                                                        ? "text-green-500 font-medium"
+                                                        : "text-gray-400"
+                                                }
+                                            >
+                                                {decorator.status || "N/A"}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Action Button */}
+                                <button
+                                    onClick={() => { handleAssignDecorator(decorator._id) }}
+                                    className="btn btn-sm btn-primary"
+                                >
+                                    Assign
+                                </button>
+                            </div>
+                        ))
+                    )}
+                    {/* Close button */}
+                    <form method="dialog" className="modal-backdrop">
+                        <button className="btn btn-secondary mt-4">Close</button>
+                    </form>
+                </div>
+
+            </dialog>
+
         </div>
     );
 };
