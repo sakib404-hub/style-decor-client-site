@@ -2,13 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useRef, useState } from 'react';
 import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
+import Swal from 'sweetalert2';
 
 const AssignDecorator = () => {
     const axiosInstance = useAxios();
     const status = 'available';
     const [selectedbooking, setSelectedBooking] = useState(null);
     const modalRef = useRef();
-    const { data: bookings = {}, isLoading } = useQuery({
+    const { data: bookings = [], isLoading } = useQuery({
         queryKey: ['Bookings', 'paid'],
         queryFn: async () => {
             try {
@@ -16,11 +17,11 @@ const AssignDecorator = () => {
                 return res.data;
             } catch (error) {
                 console.log(error);
-                return {};
+                return [];
             }
         }
     })
-    const { data: decorators = {} } = useQuery({
+    const { data: decorators = [], refetch } = useQuery({
         queryKey: ['decorators', 'available'],
         queryFn: async () => {
             try {
@@ -28,10 +29,11 @@ const AssignDecorator = () => {
                 return res.data;
             } catch (error) {
                 console.log(error);
-                return {};
+                return [];
             }
         }
     })
+    console.log(decorators);
 
 
 
@@ -48,15 +50,41 @@ const AssignDecorator = () => {
         const decoratorUpdate = {
             decoratorId: id
         }
-
         try {
-            const res = await axiosInstance.patch(`/bookings/${bookingId}/assign`, decoratorUpdate)
-            console.log(res.data);
-            modalRef.current.close();
+            const res = await axiosInstance.patch(`/bookings/${bookingId}/assign`, decoratorUpdate);
+
+            if (res.data.message) {
+                Swal.fire({
+                    title: 'Assigned!',
+                    text: `Decorator has been successfully assigned to this booking.`,
+                    icon: 'success',
+                    confirmButtonColor: '#22c55e',
+                    customClass: {
+                        popup: 'rounded-xl shadow-lg p-6',
+                        title: 'text-lg font-semibold text-gray-800',
+                        htmlContainer: 'text-gray-600 mt-2',
+                        confirmButton: 'px-6 py-2 font-semibold text-white',
+                    }
+                });
+                refetch();
+                modalRef.current.close();
+            }
+
         } catch (error) {
             console.error(error.message);
+            Swal.fire({
+                title: 'Error!',
+                text: `Failed to assign decorator: ${error.message}`,
+                icon: 'error',
+                confirmButtonColor: '#ef4444', // red
+                customClass: {
+                    popup: 'rounded-xl shadow-lg p-6',
+                    title: 'text-lg font-semibold text-gray-800',
+                    htmlContainer: 'text-gray-600 mt-2',
+                    confirmButton: 'px-6 py-2 font-semibold text-white',
+                }
+            });
         }
-
 
     }
     if (isLoading) {
@@ -78,6 +106,7 @@ const AssignDecorator = () => {
                     {/* Table Head */}
                     <thead>
                         <tr>
+                            <th>SL No</th>
                             <th>Service</th>
                             <th>Customer</th>
                             <th>Service Status</th>
@@ -149,12 +178,19 @@ const AssignDecorator = () => {
 
                                 {/* Action */}
                                 <td>
-                                    <button
-                                        className="btn btn-sm btn-primary"
-                                        onClick={() => handleFindDecorator(booking)}
-                                    >
-                                        Find Decorators
-                                    </button>
+                                    {
+                                        booking.serviceStatus === 'Paid–Waiting for Assignment' ? <button
+                                            className="btn btn-sm btn-primary"
+                                            onClick={() => handleFindDecorator(booking)}
+                                        >
+                                            Find Decorators
+                                        </button> : <button
+                                            className="btn btn-sm btn-primary"
+                                            disabled
+                                        >
+                                            Decorator Assigned
+                                        </button>
+                                    }
                                 </td>
                             </tr>
                         ))}
