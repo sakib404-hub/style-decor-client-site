@@ -9,31 +9,31 @@ const AssignDecorator = () => {
     const status = 'available';
     const [selectedbooking, setSelectedBooking] = useState(null);
     const modalRef = useRef();
-    const { data: bookings = [], isLoading } = useQuery({
+    const { data: bookings = [], isLoading: isBookingsLoading, refetch: refetchBookings } = useQuery({
         queryKey: ['Bookings', 'paid'],
         queryFn: async () => {
             try {
-                const res = await axiosInstance.get(`/paidBookings?status=Paid`)
+                const res = await axiosInstance.get(`/paidBookings?status=Paid`);
                 return res.data;
             } catch (error) {
                 console.log(error);
                 return [];
             }
         }
-    })
-    const { data: decorators = [], refetch } = useQuery({
+    });
+
+    const { data: decorators = [], isLoading: isDecoratorsLoading, refetch: refetchDecorators } = useQuery({
         queryKey: ['decorators', 'available'],
         queryFn: async () => {
             try {
-                const res = await axiosInstance.get(`/users/${status}/decorator`)
+                const res = await axiosInstance.get(`/users/${status}/decorator`);
                 return res.data;
             } catch (error) {
                 console.log(error);
                 return [];
             }
         }
-    })
-    console.log(decorators);
+    });
 
 
 
@@ -66,7 +66,8 @@ const AssignDecorator = () => {
                         confirmButton: 'px-6 py-2 font-semibold text-white',
                     }
                 });
-                refetch();
+                refetchBookings();
+                refetchDecorators();
                 modalRef.current.close();
             }
 
@@ -76,7 +77,7 @@ const AssignDecorator = () => {
                 title: 'Error!',
                 text: `Failed to assign decorator: ${error.message}`,
                 icon: 'error',
-                confirmButtonColor: '#ef4444', // red
+                confirmButtonColor: '#ef4444',
                 customClass: {
                     popup: 'rounded-xl shadow-lg p-6',
                     title: 'text-lg font-semibold text-gray-800',
@@ -87,7 +88,7 @@ const AssignDecorator = () => {
         }
 
     }
-    if (isLoading) {
+    if (isBookingsLoading || isDecoratorsLoading) {
         return <Spinner></Spinner>
     }
 
