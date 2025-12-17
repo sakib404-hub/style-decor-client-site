@@ -7,10 +7,14 @@ import Footer from '../../../Components/Footer/Footer';
 import { Outlet, useNavigate } from 'react-router';
 import useRole from '../../../Hooks/useRole/useRole';
 import { MdPayments } from "react-icons/md";
+import Spinner from '../../../Components/Spinner/Spinner';
 
 const DashBoard = () => {
     const navigate = useNavigate();
-    const { role } = useRole();
+    const { role, isLoading } = useRole();
+    if (isLoading) {
+        return <Spinner></Spinner>
+    }
     return (
         <div className="max-w-[1440px] mx-auto bg-slate-100">
             <div className="drawer lg:drawer-open">
@@ -79,7 +83,7 @@ const DashBoard = () => {
 
                             {/* Manage Users */}
                             {
-                                role === 'admin' && <li>
+                                role.role === 'admin' && <li>
                                     <button
                                         className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
                                         data-tip="Manage Users"

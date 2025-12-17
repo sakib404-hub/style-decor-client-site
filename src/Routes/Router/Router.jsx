@@ -17,8 +17,8 @@ import Spinner from "../../Components/Spinner/Spinner";
 import MyBookings from "../../Pages/DashBoard/MyBookings/MyBookings";
 import PaymentsSuccess from "../../Pages/DashBoard/Payments/PaymentsSuccess/PaymentsSuccess";
 import PaymentCancel from "../../Pages/DashBoard/Payments/PaymentCancel/PaymentCancel";
-import AdminRoute from './../AdminRoute/AdminRoute'
 import PaymentHistory from "../../Pages/DashBoard/PaymentHistory/PaymentHistory";
+import AdminRoute from "../AdminRoute/AdminRoute";
 
 
 export const router = createBrowserRouter([

@@ -9,7 +9,7 @@ const AdminRoute = ({ children }) => {
     if (loading || isLoading) {
         return <Spinner></Spinner>
     }
-    if (role !== 'admin') {
+    if (role.role !== 'admin') {
         return <p>Access Forbidden!</p>
     }
     return children;
