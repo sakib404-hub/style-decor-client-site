@@ -20,6 +20,8 @@ import PaymentCancel from "../../Pages/DashBoard/Payments/PaymentCancel/PaymentC
 import PaymentHistory from "../../Pages/DashBoard/PaymentHistory/PaymentHistory";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import AssignDecorator from "../../Pages/DashBoard/AssignDecorator/AssignDecorator";
+import ManageServices from "../../Pages/DashBoard/ManageServices/ManageServices";
+import DecoratorsRoute from "../DecoratorsRoute/DecoratorsRoute";
 
 
 export const router = createBrowserRouter([
@@ -104,6 +106,12 @@ export const router = createBrowserRouter([
             {
                 path: 'assign-decorator',
                 Component: AssignDecorator
+            },
+            {
+                path: 'manageServices',
+                element: <DecoratorsRoute>
+                    <ManageServices></ManageServices>
+                </DecoratorsRoute>
             }
         ]
     }
