@@ -40,8 +40,24 @@ const AssignDecorator = () => {
         setSelectedBooking(booking);
         modalRef.current.showModal();
     }
-    const handleAssignDecorator = (decorator) => {
-        console.log(decorator);
+    const handleAssignDecorator = async (id) => {
+        if (!selectedbooking) {
+            return;
+        }
+        const bookingId = selectedbooking._id;
+        const decoratorUpdate = {
+            decoratorId: id
+        }
+
+        try {
+            const res = await axiosInstance.patch(`/bookings/${bookingId}/assign`, decoratorUpdate)
+            console.log(res.data);
+            modalRef.current.close();
+        } catch (error) {
+            console.error(error.message);
+        }
+
+
     }
     if (isLoading) {
         return <Spinner></Spinner>
