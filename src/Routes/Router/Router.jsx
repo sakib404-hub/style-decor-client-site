@@ -17,6 +17,7 @@ import Spinner from "../../Components/Spinner/Spinner";
 import MyBookings from "../../Pages/DashBoard/MyBookings/MyBookings";
 import PaymentsSuccess from "../../Pages/DashBoard/Payments/PaymentsSuccess/PaymentsSuccess";
 import PaymentCancel from "../../Pages/DashBoard/Payments/PaymentCancel/PaymentCancel";
+import AdminRoute from './../AdminRoute/AdminRoute'
 
 
 export const router = createBrowserRouter([
@@ -80,7 +81,9 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'manageUsers',
-                Component: ManageUsers,
+                element: <AdminRoute>
+                    <ManageUsers></ManageUsers>
+                </AdminRoute>
             },
             {
                 path: 'myBookings',

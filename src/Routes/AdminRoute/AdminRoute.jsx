@@ -1,12 +1,13 @@
 import React from 'react';
 import useAuth from '../../Hooks/useAuth/useAuth';
 import useRole from '../../Hooks/useRole/useRole';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const AdminRoute = ({ children }) => {
     const { loading } = useAuth();
     const { role, isLoading } = useRole();
     if (loading || isLoading) {
-        return <Loader></Loader>
+        return <Spinner></Spinner>
     }
     if (role !== 'admin') {
         return <p>Access Forbidden!</p>

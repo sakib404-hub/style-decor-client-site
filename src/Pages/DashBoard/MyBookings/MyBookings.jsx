@@ -3,13 +3,14 @@ import useAuth from '../../../Hooks/useAuth/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
+import Swal from 'sweetalert2';
 
 const MyBookings = () => {
     const { user } = useAuth();
     const axiosInstance = useAxios();
 
     // loading bookings 
-    const { data: myBookings = {}, isLoading } = useQuery({
+    const { data: myBookings = {}, isLoading, refetch } = useQuery({
         queryKey: ['myBookings', user?.email],
         queryFn: async () => {
             try {
@@ -26,20 +27,13 @@ const MyBookings = () => {
     const handlePayment = async (booking) => {
         console.log('Button is clicked');
         const paymentInfo = {
+            bookingId: booking._id,
             serviceId: booking.serviceId,
             serviceName: booking.serviceName,
             cost: booking.price,
             customerEmail: booking.customerEmail,
             serviceImg: booking.serviceImg
         }
-
-        // axiosInstance.post('/create-checkout-session', paymentInfo)
-        //     .then((res)=>{
-        //         console.log(res);
-        //     })
-        //     .catch((error)=>{
-        //         console.log(error);
-        //     })
 
         try {
             const res = await axiosInstance.post('/create-checkout-session', paymentInfo)
@@ -48,6 +42,54 @@ const MyBookings = () => {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    //handling the cancel booking 
+    const handleCancelBooking = (booking) => {
+        Swal.fire({
+            title: "Cancel Booking?",
+            text: "This action will cancel your booking and cannot be undone.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, cancel booking",
+            cancelButtonText: "No, keep booking",
+            confirmButtonColor: "#e11d48",
+            cancelButtonColor: "#16a34a",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosInstance.delete(`/bookings/${booking._id}/delete`)
+                    .then((res) => {
+                        if (res.data.deletedCount) {
+                            refetch();
+                            Swal.fire({
+                                title: "Booking Cancelled",
+                                text: "Your booking has been successfully cancelled.",
+                                icon: "success",
+                                confirmButtonColor: "#16a34a"
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        Swal.fire({
+                            icon: "error",
+                            title: `Cancellation Failed ${error.message}`,
+                            text: "We couldn't cancel your booking right now. Please try again later.",
+                            confirmButtonText: "Okay",
+                            confirmButtonColor: "#e11d48",
+                            background: "#fff5f5",
+                            timer: 5000,
+                            timerProgressBar: true,
+                            customClass: {
+                                popup: "rounded-xl",
+                                title: "text-red-600 font-bold",
+                                htmlContainer: "text-gray-700",
+                                confirmButton: "px-6 py-2 rounded-lg font-semibold"
+                            }
+                        });
+                    })
+            }
+        });
     }
 
 
@@ -134,16 +176,24 @@ const MyBookings = () => {
                                     {/* Action */}
                                     <td>
                                         {booking.paymentStatus.toLowerCase() === 'paid' ? (
-                                            <button className="btn btn-sm btn-success cursor-not-allowed" disabled>
-                                                Paid
+                                            <button className="btn btn-sm btn-success cursor-not-allowed text-white">
+                                                Track Your Service
                                             </button>
                                         ) : (
-                                            <button
-                                                className="btn btn-sm btn-secondary"
-                                                onClick={() => handlePayment(booking)}
-                                            >
-                                                Pay
-                                            </button>
+                                            <div className='space-x-2'>
+                                                <button
+                                                    className="btn btn-sm btn-secondary"
+                                                    onClick={() => handlePayment(booking)}
+                                                >
+                                                    Pay
+                                                </button>
+                                                <button
+                                                    className="btn btn-sm btn-secondary"
+                                                    onClick={() => handleCancelBooking(booking)}
+                                                >
+                                                    Cancel Booking
+                                                </button>
+                                            </div>
                                         )}
                                     </td>
                                 </tr>
