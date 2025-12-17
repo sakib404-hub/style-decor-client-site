@@ -19,6 +19,7 @@ import PaymentsSuccess from "../../Pages/DashBoard/Payments/PaymentsSuccess/Paym
 import PaymentCancel from "../../Pages/DashBoard/Payments/PaymentCancel/PaymentCancel";
 import PaymentHistory from "../../Pages/DashBoard/PaymentHistory/PaymentHistory";
 import AdminRoute from "../AdminRoute/AdminRoute";
+import AssignDecorator from "../../Pages/DashBoard/AssignDecorator/AssignDecorator";
 
 
 export const router = createBrowserRouter([
@@ -32,12 +33,6 @@ export const router = createBrowserRouter([
                 Component: Home,
                 loader: () => fetch('/locations.json'),
                 hydrateFallbackElement: <Spinner />
-            },
-            {
-                path: 'profile',
-                element: <PrivateRoute>
-                    <Profile></Profile>
-                </PrivateRoute>
             },
             {
                 path: 'services',
@@ -95,12 +90,20 @@ export const router = createBrowserRouter([
                 Component: PaymentsSuccess
             },
             {
+                path: 'profile',
+                element: <Profile></Profile>
+            },
+            {
                 path: 'payment-cancel',
                 Component: PaymentCancel
             },
             {
                 path: 'paymentHistory',
                 Component: PaymentHistory
+            },
+            {
+                path: 'assign-decorator',
+                Component: AssignDecorator
             }
         ]
     }

@@ -6,8 +6,9 @@ import { PiUserSwitchFill } from 'react-icons/pi';
 import Footer from '../../../Components/Footer/Footer';
 import { Outlet, useNavigate } from 'react-router';
 import useRole from '../../../Hooks/useRole/useRole';
-import { MdPayments } from "react-icons/md";
+import { MdAssignmentTurnedIn, MdPayments } from "react-icons/md";
 import Spinner from '../../../Components/Spinner/Spinner';
+import { CgProfile } from "react-icons/cg";
 
 const DashBoard = () => {
     const navigate = useNavigate();
@@ -60,6 +61,18 @@ const DashBoard = () => {
                                     <span className="is-drawer-close:hidden">Home Page</span>
                                 </button>
                             </li>
+                            {/* my profile page  */}
+                            <li>
+                                <button
+                                    onClick={() => navigate('/dashboard/profile')}
+                                    className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
+                                    data-tip="My Profile"
+                                >
+                                    <CgProfile className="size-6" />
+                                    <span className="is-drawer-close:hidden">My Profile</span>
+                                </button>
+                            </li>
+                            {/* my bookings  */}
                             <li>
                                 <button
                                     className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
@@ -70,6 +83,7 @@ const DashBoard = () => {
                                     <span className="is-drawer-close:hidden">My Bookings</span>
                                 </button>
                             </li>
+                            {/* payment History  */}
                             <li>
                                 <button
                                     className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
@@ -80,6 +94,19 @@ const DashBoard = () => {
                                     <span className="is-drawer-close:hidden">Payment History</span>
                                 </button>
                             </li>
+                            {/* assign decorator  */}
+                            {
+                                role.role === 'admin' && <li>
+                                    <button
+                                        className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
+                                        data-tip="Assign Decorator"
+                                        onClick={() => { navigate('/dashboard/assign-decorator') }}
+                                    >
+                                        <MdAssignmentTurnedIn className="size-6" />
+                                        <span className="is-drawer-close:hidden">Assign Decorator</span>
+                                    </button>
+                                </li>
+                            }
 
                             {/* Manage Users */}
                             {
@@ -94,7 +121,6 @@ const DashBoard = () => {
                                     </button>
                                 </li>
                             }
-
                         </ul>
                     </div>
 
