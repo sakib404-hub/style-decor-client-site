@@ -111,7 +111,9 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'assign-decorator',
-                Component: AssignDecorator
+                element: <AdminRoute>
+                    <AssignDecorator></AssignDecorator>
+                </AdminRoute>
             },
             {
                 path: 'completedService',

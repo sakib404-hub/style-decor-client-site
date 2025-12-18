@@ -99,16 +99,18 @@ const DashBoard = () => {
                                 </li>
                             }
                             {/* Completed Service  */}
-                            <li>
-                                <button
-                                    className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
-                                    data-tip="Completed Service"
-                                    onClick={() => navigate('/dashboard/completedService')}
-                                >
-                                    <IoCheckmarkDoneCircle className="size-6" />
-                                    <span className="is-drawer-close:hidden">Completed Service</span>
-                                </button>
-                            </li>
+                            {
+                                (role.role === 'user' || role.role === 'decorator') && <li>
+                                    <button
+                                        className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
+                                        data-tip="Completed Service"
+                                        onClick={() => navigate('/dashboard/completedService')}
+                                    >
+                                        <IoCheckmarkDoneCircle className="size-6" />
+                                        <span className="is-drawer-close:hidden">Completed Service</span>
+                                    </button>
+                                </li>
+                            }
                             {/* payment History  */}
                             <li>
                                 <button
