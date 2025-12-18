@@ -10,6 +10,7 @@ import { MdAssignmentTurnedIn, MdPayments } from "react-icons/md";
 import Spinner from '../../../Components/Spinner/Spinner';
 import { CgProfile } from "react-icons/cg";
 import { GoProjectSymlink } from "react-icons/go";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
 
 const DashBoard = () => {
     const navigate = useNavigate();
@@ -96,6 +97,17 @@ const DashBoard = () => {
                                     </button>
                                 </li>
                             }
+                            {/* Completed Service  */}
+                            <li>
+                                <button
+                                    className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
+                                    data-tip="Completed Service"
+                                    onClick={() => navigate('/dashboard/completedService')}
+                                >
+                                    <IoCheckmarkDoneCircle className="size-6" />
+                                    <span className="is-drawer-close:hidden">Completed Service</span>
+                                </button>
+                            </li>
                             {/* payment History  */}
                             <li>
                                 <button

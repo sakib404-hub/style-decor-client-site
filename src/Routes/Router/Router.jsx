@@ -22,6 +22,7 @@ import AdminRoute from "../AdminRoute/AdminRoute";
 import AssignDecorator from "../../Pages/DashBoard/AssignDecorator/AssignDecorator";
 import ManageServices from "../../Pages/DashBoard/ManageServices/ManageServices";
 import DecoratorsRoute from "../DecoratorsRoute/DecoratorsRoute";
+import CompletedService from "../../Pages/DashBoard/CompletedService.jsx/CompletedService";
 
 
 export const router = createBrowserRouter([
@@ -106,6 +107,10 @@ export const router = createBrowserRouter([
             {
                 path: 'assign-decorator',
                 Component: AssignDecorator
+            },
+            {
+                path: 'completedService',
+                Component: CompletedService
             },
             {
                 path: 'manageServices',

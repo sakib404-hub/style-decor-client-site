@@ -65,7 +65,7 @@ const ManageServices = () => {
             });
     };
 
-    const handleUpdateStatusComplete = (bookingId, status) => {
+    const handleUpdateStatusComplete = (bookingId) => {
         Swal.fire({
             title: 'Complete Service?',
             html: `
@@ -77,9 +77,7 @@ const ManageServices = () => {
         <li>All materials are prepared</li>
         <li>Setup is fully completed</li>
       </ul>
-      <p class="mt-3 text-gray-700">
-        Do you want to proceed?
-      </p>
+      <p class="mt-3 text-gray-700">Do you want to proceed?</p>
     `,
             icon: 'warning',
             showCancelButton: true,
@@ -87,22 +85,30 @@ const ManageServices = () => {
             cancelButtonText: 'Cancel',
             confirmButtonColor: '#22c55e',
             cancelButtonColor: '#ef4444',
-            customClass: {
-                popup: 'rounded-xl shadow-lg p-6',
-                title: 'text-lg font-semibold text-gray-800',
-                htmlContainer: 'mt-2',
-                confirmButton: 'px-6 py-2 font-semibold text-white',
-                cancelButton: 'px-6 py-2 font-semibold'
-            },
-            focusConfirm: false
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                // call your update function here
-                handleUpdateStatus(bookingId, status);
+                try {
+                    await axiosInstance.post("/completedService", { bookingId });
+
+                    Swal.fire({
+                        title: 'Service Completed!',
+                        text: 'The service has been completed successfully.',
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                    refetch();
+
+                } catch (error) {
+                    Swal.fire({
+                        title: 'Failed!',
+                        text: `Could not complete the service. Please try again, ${error.message}`,
+                        icon: 'error',
+                    });
+                }
             }
         });
     };
-
 
     return (
         <div>
