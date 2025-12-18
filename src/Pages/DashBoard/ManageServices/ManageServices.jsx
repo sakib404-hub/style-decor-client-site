@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAuth from '../../../Hooks/useAuth/useAuth';
-import useAxios from '../../../Hooks/useAxios/useAxios';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const ManageServices = () => {
     const { user } = useAuth();
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
 
     const { data: assignedServices = [], refetch } = useQuery({
         queryKey: ['bookings', user?.email],
         queryFn: async () => {
             try {
-                const res = await axiosInstance.get(`/bookings?decoratorEmail=${user?.email}`)
+                const res = await axiosInstanceSecure.get(`/bookings?decoratorEmail=${user?.email}`)
                 return res.data;
             }
             catch (error) {
@@ -24,7 +24,7 @@ const ManageServices = () => {
 
     const handleUpdateStatus = (bookingId, status) => {
         const update = { status };
-        axiosInstance
+        axiosInstanceSecure
             .patch(`/bookings/${bookingId}/update`, update)
             .then((res) => {
                 if (res.data?.message || res.status === 200) {
@@ -88,7 +88,7 @@ const ManageServices = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await axiosInstance.post("/completedService", { bookingId });
+                    await axiosInstanceSecure.post("/completedService", { bookingId });
 
                     Swal.fire({
                         title: 'Service Completed!',

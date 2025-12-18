@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useRef, useState } from 'react';
-import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const AssignDecorator = () => {
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
     const status = 'available';
     const [selectedbooking, setSelectedBooking] = useState(null);
     const modalRef = useRef();
@@ -13,7 +13,7 @@ const AssignDecorator = () => {
         queryKey: ['Bookings', 'paid'],
         queryFn: async () => {
             try {
-                const res = await axiosInstance.get(`/paidBookings?status=Paid`);
+                const res = await axiosInstanceSecure.get(`/paidBookings?status=Paid`);
                 return res.data;
             } catch (error) {
                 console.log(error);
@@ -26,7 +26,7 @@ const AssignDecorator = () => {
         queryKey: ['decorators', 'available'],
         queryFn: async () => {
             try {
-                const res = await axiosInstance.get(`/users/${status}/decorator`);
+                const res = await axiosInstanceSecure.get(`/users/${status}/decorator`);
                 return res.data;
             } catch (error) {
                 console.log(error);
@@ -51,7 +51,7 @@ const AssignDecorator = () => {
             decoratorId: id
         }
         try {
-            const res = await axiosInstance.patch(`/bookings/${bookingId}/assign`, decoratorUpdate);
+            const res = await axiosInstanceSecure.patch(`/bookings/${bookingId}/assign`, decoratorUpdate);
 
             if (res.data.message) {
                 Swal.fire({

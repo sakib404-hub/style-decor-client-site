@@ -1,5 +1,4 @@
 import React from 'react';
-import useAxios from '../../../../Hooks/useAxios/useAxios';
 import useAuth from '../../../../Hooks/useAuth/useAuth';
 import Spinner from '../../../../Components/Spinner/Spinner';
 import { useQuery } from '@tanstack/react-query';
@@ -13,16 +12,18 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from 'recharts';
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure/useAxiosSecure';
+
 
 const UserDashBoard = () => {
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
     const { user } = useAuth();
 
     const { data: userSummary = {}, isLoading } = useQuery({
         queryKey: ['userSummary', user?.email],
         queryFn: async () => {
             try {
-                const res = await axiosInstance.get(
+                const res = await axiosInstanceSecure.get(
                     `/dashboard/user/summary?email=${user.email}`
                 );
                 return res.data;

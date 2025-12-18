@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import { CheckCircle } from "lucide-react";
-import useAxios from "../../../../Hooks/useAxios/useAxios";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure/useAxiosSecure";
 
 const PaymentSuccess = () => {
     const [searchParams] = useSearchParams();
     const sessionId = searchParams.get('session_id');
     const [paymentInfo, setPaymentInfo] = useState({});
 
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
 
     useEffect(() => {
         if (sessionId) {
-            axiosInstance.patch(`/payment-success?session_id=${sessionId}`)
+            axiosInstanceSecure.patch(`/payment-success?session_id=${sessionId}`)
                 .then((res) => {
                     console.log(res);
                     setPaymentInfo({
@@ -21,7 +21,7 @@ const PaymentSuccess = () => {
                     })
                 })
         }
-    }, [axiosInstance, sessionId])
+    }, [axiosInstanceSecure, sessionId])
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-green-50 to-green-100 p-6">

@@ -9,13 +9,13 @@ import useAuth from '../../../Hooks/useAuth/useAuth';
 import { updateProfile } from 'firebase/auth';
 import { auth } from '../../../Firebase/firebase.config';
 import Swal from 'sweetalert2';
-import useAxios from '../../../Hooks/useAxios/useAxios';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const Register = () => {
     const navigate = useNavigate();
     const { createUser, setLoading } = useAuth();
     const [showPass, setShowPass] = useState(false);
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
     const {
         register,
         handleSubmit,
@@ -50,7 +50,7 @@ const Register = () => {
                 navigate('/');
                 updateProfile(auth.currentUser, { displayName: newUser.userName, photoURL: newUser.userImage })
                     .then(() => {
-                        axiosInstance.post('/users', newUser)
+                        axiosInstanceSecure.post('/users', newUser)
                             .then((res) => {
                                 console.log('User saved successfully:', res.data);
                             })

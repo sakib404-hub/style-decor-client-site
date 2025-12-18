@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../../../Hooks/useAxios/useAxios';
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure/useAxiosSecure'
 import {
     FaUsers,
     FaPaintBrush,
@@ -25,13 +25,13 @@ import {
 } from 'recharts';
 
 const AdminDashBoard = () => {
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
 
     const { data: adminSummary = {}, isLoading } = useQuery({
         queryKey: ['adminSummary'],
         queryFn: async () => {
             try {
-                const res = await axiosInstance.get('/dashboard/admin/summary');
+                const res = await axiosInstanceSecure.get('/dashboard/admin/summary');
                 return res.data;
             } catch (error) {
                 console.log(error);

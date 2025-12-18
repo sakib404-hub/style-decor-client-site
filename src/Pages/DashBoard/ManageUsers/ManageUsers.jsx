@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useRef, useState } from 'react';
-import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
 import Swal from 'sweetalert2';
 import { FaRegUser } from 'react-icons/fa';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const ManageUsers = () => {
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
     const [selectedUser, setSelectedUser] = useState(null);
     const modalRef = useRef(null);
     const [searchText, setSearchText] = useState('');
@@ -15,7 +15,7 @@ const ManageUsers = () => {
     const { data: users = [], isLoading, refetch } = useQuery({
         queryKey: ['/users', 'allUsers', searchText],
         queryFn: async () => {
-            const res = await axiosInstance.get(`/users?searchText=${searchText}`);
+            const res = await axiosInstanceSecure.get(`/users?searchText=${searchText}`);
             return res.data;
         }
     })
@@ -24,7 +24,7 @@ const ManageUsers = () => {
         const updateInfo = {
             userRole: role
         }
-        axiosInstance.patch(`/users/${user?._id}/role`, updateInfo)
+        axiosInstanceSecure.patch(`/users/${user?._id}/role`, updateInfo)
             .then((res) => {
                 if (res.data.modifiedCount) {
                     refetch();

@@ -1,14 +1,14 @@
 import React from 'react';
 import useAuth from '../../../Hooks/useAuth/useAuth';
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const MyBookings = () => {
     const { user } = useAuth();
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
     const navigate = useNavigate();
 
     // loading bookings 
@@ -16,7 +16,7 @@ const MyBookings = () => {
         queryKey: ['myBookings', user?.email],
         queryFn: async () => {
             try {
-                const res = await axiosInstance.get(`/bookings?email=${user?.email}`);
+                const res = await axiosInstanceSecure.get(`/bookings?email=${user?.email}`);
                 return res.data;
             } catch (error) {
                 console.log(error);
@@ -27,7 +27,6 @@ const MyBookings = () => {
 
     //handling the payment
     const handlePayment = async (booking) => {
-        console.log('Button is clicked');
         const paymentInfo = {
             bookingId: booking._id,
             serviceId: booking.serviceId,
@@ -38,7 +37,7 @@ const MyBookings = () => {
         }
 
         try {
-            const res = await axiosInstance.post('/create-checkout-session', paymentInfo)
+            const res = await axiosInstanceSecure.post('/create-checkout-session', paymentInfo)
             console.log(res.data)
             window.location.assign(res.data.url);
         } catch (error) {
@@ -60,7 +59,7 @@ const MyBookings = () => {
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosInstance.delete(`/bookings/${booking._id}/delete`)
+                axiosInstanceSecure.delete(`/bookings/${booking._id}/delete`)
                     .then((res) => {
                         if (res.data.deletedCount) {
                             refetch();

@@ -8,10 +8,12 @@ import { ImCross } from "react-icons/im";
 import { useForm } from 'react-hook-form';
 import useAuth from '../../Hooks/useAuth/useAuth'
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const ServiceDetails = () => {
     const { id } = useParams();
     const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
     const modalRef = useRef();
     const { user } = useAuth();
 
@@ -77,7 +79,7 @@ const ServiceDetails = () => {
                     price: service.discountPrice,
                     serviceStatus: 'Pending Payment'
                 }
-                axiosInstance.post('/bookings', newBooking)
+                axiosInstanceSecure.post('/bookings', newBooking)
                     .then((res) => {
                         if (res.data.insertedId) {
                             reset();

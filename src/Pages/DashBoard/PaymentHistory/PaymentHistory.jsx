@@ -1,17 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import useAxios from '../../../Hooks/useAxios/useAxios';
 import useAuth from '../../../Hooks/useAuth/useAuth';
 import Spinner from '../../../Components/Spinner/Spinner';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const PaymentHistory = () => {
     const { user } = useAuth();
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
 
     const { data: payments = [], isLoading } = useQuery({
         queryKey: ['payments', user?.email],
         queryFn: async () => {
-            const res = await axiosInstance.get(`/payments?email=${user?.email}`);
+            const res = await axiosInstanceSecure.get(`/payments?email=${user?.email}`);
             return res.data;
         },
         enabled: !!user?.email

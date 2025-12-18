@@ -1,5 +1,4 @@
 import React from 'react';
-import useAxios from '../../../../Hooks/useAxios/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../../../../Components/Spinner/Spinner';
 import useAuth from '../../../../Hooks/useAuth/useAuth';
@@ -17,16 +16,17 @@ import {
     Cell,
     Legend,
 } from 'recharts';
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const DecoratorDashBoard = () => {
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
     const { user } = useAuth();
 
     const { data: decoratorSummary = {}, isLoading } = useQuery({
         queryKey: ['decoratorSummary', user?.email],
         queryFn: async () => {
             try {
-                const res = await axiosInstance.get(
+                const res = await axiosInstanceSecure.get(
                     `/dashboard/decorator/summary?email=${user.email}`
                 );
                 return res.data;

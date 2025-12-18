@@ -3,11 +3,11 @@ import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../../Hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
-import useAxios from '../../../Hooks/useAxios/useAxios';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const SocialLogin = () => {
     const { handleGoogleSignIn } = useAuth();
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
     const navigate = useNavigate();
     const handleSocialOnClick = () => {
         handleGoogleSignIn()
@@ -18,7 +18,7 @@ const SocialLogin = () => {
                     userImage: res.user.photoURL,
                     userRole: 'user'
                 }
-                axiosInstance.post('/users', newUser)
+                axiosInstanceSecure.post('/users', newUser)
                     .then((res) => {
                         console.log('User saved successfully:', res.data);
                     })

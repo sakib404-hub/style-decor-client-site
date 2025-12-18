@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAuth from '../../../Hooks/useAuth/useAuth';
-import useAxios from '../../../Hooks/useAxios/useAxios';
 import Spinner from '../../../Components/Spinner/Spinner';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure/useAxiosSecure';
 
 const CompletedService = () => {
     const { user } = useAuth();
-    const axiosInstance = useAxios();
+    const axiosInstanceSecure = useAxiosSecure();
 
     const { data: completedService = [], isLoading } = useQuery({
         queryKey: ['completedService', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-            const res = await axiosInstance.get(
+            const res = await axiosInstanceSecure.get(
                 `/completedService?email=${user.email}`
             );
             return res.data;
