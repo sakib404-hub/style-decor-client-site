@@ -57,6 +57,7 @@ const DashBoard = () => {
                             <li>
                                 <button
                                     className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
+                                    onClick={() => navigate('/dashboard')}
                                     data-tip="Home Page"
                                 >
                                     <FaHome className="size-6" />

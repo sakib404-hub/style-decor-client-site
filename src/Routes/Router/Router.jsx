@@ -23,6 +23,7 @@ import AssignDecorator from "../../Pages/DashBoard/AssignDecorator/AssignDecorat
 import ManageServices from "../../Pages/DashBoard/ManageServices/ManageServices";
 import DecoratorsRoute from "../DecoratorsRoute/DecoratorsRoute";
 import CompletedService from "../../Pages/DashBoard/CompletedService.jsx/CompletedService";
+import DashBoardHome from "../../Pages/DashBoard/DashBoardHome/DashBoardHome";
 
 
 export const router = createBrowserRouter([
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
         </PrivateRoute>,
         errorElement: <ErrorPage></ErrorPage>,
         children: [
+            {
+                index: true,
+                Component: DashBoardHome
+            },
             {
                 path: 'manageUsers',
                 element: <AdminRoute>
