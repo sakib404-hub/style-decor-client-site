@@ -2,18 +2,18 @@ import React from "react";
 import useAuth from "../../../Hooks/useAuth/useAuth";
 import { FaEdit, FaEnvelope, FaUserTag, FaCalendarAlt } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../../Hooks/useAxios/useAxios";
 import Spinner from "../../../Components/Spinner/Spinner";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure/useAxiosSecure";
 
 const Profile = () => {
-    const { user } = useAuth();
-    const axiosInstance = useAxios();
+    const { user } = useAuth()
+    const axiosSecureInstance = useAxiosSecure();
 
     const { data: dbUser = [], isLoading } = useQuery({
         queryKey: ["user", user?.email, user?.role],
         enabled: !!user?.email,
         queryFn: async () => {
-            const res = await axiosInstance.get(`/myUserInfo?email=${user.email}`);
+            const res = await axiosSecureInstance.get(`/myUserInfo?email=${user.email}`);
             return res.data;
         },
     });
