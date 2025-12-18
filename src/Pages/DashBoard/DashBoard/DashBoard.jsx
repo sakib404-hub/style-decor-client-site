@@ -6,7 +6,7 @@ import { PiUserSwitchFill } from 'react-icons/pi';
 import Footer from '../../../Components/Footer/Footer';
 import { Outlet, useNavigate } from 'react-router';
 import useRole from '../../../Hooks/useRole/useRole';
-import { MdAssignmentTurnedIn, MdLibraryAdd, MdPayments } from "react-icons/md";
+import { MdAssignmentTurnedIn, MdEditSquare, MdLibraryAdd, MdPayments } from "react-icons/md";
 import Spinner from '../../../Components/Spinner/Spinner';
 import { CgProfile } from "react-icons/cg";
 import { GoProjectSymlink } from "react-icons/go";
@@ -108,6 +108,19 @@ const DashBoard = () => {
                                     >
                                         <MdLibraryAdd className="size-6" />
                                         <span className="is-drawer-close:hidden">Add Services</span>
+                                    </button>
+                                </li>
+                            }
+                            {/* edit or delete service  */}
+                            {
+                                role.role === 'admin' && <li>
+                                    <button
+                                        className="tooltip tooltip-right hover:bg-slate-800 rounded-md"
+                                        data-tip="Edit or Remove Services"
+                                        onClick={() => navigate('/dashboard/editorRemoveServices')}
+                                    >
+                                        <MdEditSquare className="size-6" />
+                                        <span className="is-drawer-close:hidden">Edit or Remove Services</span>
                                     </button>
                                 </li>
                             }
