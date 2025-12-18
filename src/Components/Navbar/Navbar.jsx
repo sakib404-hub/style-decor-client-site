@@ -110,7 +110,6 @@ const Navbar = () => {
                                     Profile
                                 </Link>
                             </li>
-
                             <li>
                                 <button
                                     onClick={handleLogOut}

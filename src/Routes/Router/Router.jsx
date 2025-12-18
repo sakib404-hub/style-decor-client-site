@@ -24,6 +24,7 @@ import ManageServices from "../../Pages/DashBoard/ManageServices/ManageServices"
 import DecoratorsRoute from "../DecoratorsRoute/DecoratorsRoute";
 import CompletedService from "../../Pages/DashBoard/CompletedService.jsx/CompletedService";
 import DashBoardHome from "../../Pages/DashBoard/DashBoardHome/DashBoardHome";
+import AddService from "../../Pages/DashBoard/AddService/AddService";
 
 
 export const router = createBrowserRouter([
@@ -87,6 +88,12 @@ export const router = createBrowserRouter([
                 path: 'manageUsers',
                 element: <AdminRoute>
                     <ManageUsers></ManageUsers>
+                </AdminRoute>
+            },
+            {
+                path: 'addServices',
+                element: <AdminRoute>
+                    <AddService></AddService>
                 </AdminRoute>
             },
             {
