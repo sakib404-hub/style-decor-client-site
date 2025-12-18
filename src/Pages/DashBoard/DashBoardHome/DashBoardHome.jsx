@@ -7,7 +7,6 @@ import DecoratorDashBoard from './DecoratorDashBoard/DecoratorDashBoard';
 
 const DashBoardHome = () => {
     const { role, isLoading } = useRole();
-    console.log(role.role, isLoading);
     if (isLoading) {
         return <Spinner></Spinner>
     }

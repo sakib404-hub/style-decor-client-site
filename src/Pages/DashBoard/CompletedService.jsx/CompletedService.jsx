@@ -18,9 +18,7 @@ const CompletedService = () => {
             return res.data;
         },
     });
-
     if (isLoading) return <Spinner />;
-
     return (
         <div>
             {/* Title */}
