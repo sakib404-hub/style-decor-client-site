@@ -22,9 +22,11 @@ const Navbar = () => {
             <NavLink
                 to='/contactUs'
                 className={'nav-link'}>Contact Us</NavLink>
-            <NavLink
-                to='/dashboard'
-                className={'nav-link'}>DashBoard</NavLink>
+            {
+                user?.email && <NavLink
+                    to='/dashboard'
+                    className={'nav-link'}>DashBoard</NavLink>
+            }
         </div>
     );
 

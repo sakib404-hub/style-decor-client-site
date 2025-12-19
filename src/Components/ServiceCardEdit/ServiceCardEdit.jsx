@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FaStar, FaClock, FaCheckCircle, FaEdit, FaTrash } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiosSecure/useAxiosSecure";
+import { useForm } from "react-hook-form";
 
 const ServiceCardEdit = ({ service, refetch }) => {
-    const navigate = useNavigate();
+    const modalRef = useRef();
     const axiosInstanceSecure = useAxiosSecure();
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm();
 
     const {
         _id,
@@ -23,6 +30,7 @@ const ServiceCardEdit = ({ service, refetch }) => {
         isPopular,
         isActive,
     } = service;
+
     const handleDelete = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -53,6 +61,34 @@ const ServiceCardEdit = ({ service, refetch }) => {
                     });
             }
         });
+    };
+
+    const handleServiceCardEditClick = () => {
+        reset();
+        modalRef.current.showModal();
+    }
+
+    const onSubmit = async (data) => {
+        try {
+            await axiosInstanceSecure.patch(`/services/${_id}`, data);
+            Swal.fire({
+                icon: "success",
+                title: "Updated!",
+                text: "Service updated successfully.",
+                timer: 1500,
+                showConfirmButton: false,
+            });
+            modalRef.current.close();
+            refetch && refetch();
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Update Failed",
+                text:
+                    error?.response?.data?.message ||
+                    "Something went wrong. Try again.",
+            });
+        }
     };
 
     return (
@@ -152,7 +188,7 @@ const ServiceCardEdit = ({ service, refetch }) => {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => navigate(`/dashboard/edit-service/${_id}`)}
+                            onClick={() => handleServiceCardEditClick()}
                             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-xl text-sm"
                         >
                             <FaEdit />
@@ -170,6 +206,78 @@ const ServiceCardEdit = ({ service, refetch }) => {
                             Delete
                         </motion.button>
                     </div>
+                    <dialog ref={modalRef} className="modal">
+                        <div className="modal-box max-w-lg">
+                            <h3 className="font-bold text-center text-lg mb-4">Edit Service</h3>
+
+                            <form
+                                onSubmit={handleSubmit(onSubmit)}
+                                className="space-y-4">
+                                <div>
+                                    <label className="label">Package Name</label>
+                                    <input
+                                        {...register("packageName", { required: true })}
+                                        className="input input-bordered w-full"
+                                        defaultValue={packageName}
+                                    />
+                                    {errors.packageName && (
+                                        <p className="text-red-500 text-sm">
+                                            Package name is required
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div>
+                                    <label className="label">Image URL</label>
+                                    <input
+                                        {...register("images", { required: true })}
+                                        className="input input-bordered w-full"
+                                        defaultValue={images}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="label">Price</label>
+                                    <input
+                                        type="number"
+                                        {...register("price", { required: true })}
+                                        className="input input-bordered w-full"
+                                        defaultValue={price}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="label">Duration</label>
+                                    <input
+                                        {...register("duration", { required: true })}
+                                        className="input input-bordered w-full"
+                                        defaultValue={duration}
+                                    />
+                                </div>
+
+                                <div className="flex justify-end gap-3 pt-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => modalRef.current.close()}
+                                        className="btn btn-outline"
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="btn btn-primary"
+                                    >
+                                        {isSubmitting ? "Saving..." : "Save Changes"}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <form method="dialog" className="modal-backdrop">
+                            <button>close</button>
+                        </form>
+                    </dialog>
                 </div>
             </div>
         </motion.div>
