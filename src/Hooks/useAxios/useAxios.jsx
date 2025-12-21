@@ -2,9 +2,8 @@ import axios from 'axios';
 import React from 'react';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5016'
+    baseURL: 'https://style-decor-ten.vercel.app'
 })
-
 const useAxios = () => {
     return axiosInstance;
 };

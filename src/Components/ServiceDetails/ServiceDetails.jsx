@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useAxios from '../../Hooks/useAxios/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../Spinner/Spinner';
@@ -16,6 +16,7 @@ const ServiceDetails = () => {
     const axiosInstanceSecure = useAxiosSecure();
     const modalRef = useRef();
     const { user } = useAuth();
+    const navigate = useNavigate();
 
     const { data: service = {}, isLoading } = useQuery({
         queryKey: ['service', id],
@@ -89,6 +90,7 @@ const ServiceDetails = () => {
                                 icon: "success",
                                 confirmButtonColor: "#4ade80"
                             });
+                            navigate('/dashboard/myBookings');
                         }
                     })
                     .catch((error) => {

@@ -4,7 +4,7 @@ import useAuth from './../useAuth/useAuth'
 import { useNavigate } from 'react-router';
 
 const axiosSecureInstance = axios.create({
-    baseURL: 'http://localhost:5016'
+    baseURL: 'https://style-decor-ten.vercel.app'
 })
 
 const useAxiosSecure = () => {

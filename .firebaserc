@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "style-decor-e1caa",
+    "prod": "style-decor-e1caa"
+  },
+  "targets": {},
+  "etags": {}
+}
